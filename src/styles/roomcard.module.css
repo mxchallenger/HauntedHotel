@@ -1,0 +1,53 @@
+.container {  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  gap: 7px 7px;
+  grid-auto-flow: row;
+  align-content: center;
+  grid-template-areas:
+    ". . . ."
+    ". . . .";
+  width: 75%;
+  height: 100%;
+  
+}
+
+.errMsg {
+  color: red;
+  font-size: 14px;
+  margin: 0px 2px 4px 4px;
+}
+.page {
+  float: center;
+}
+.hide {
+  display: none;
+}
+
+.button {
+    border: 0;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .pageLink {
+    transition: none
+  }
+}
+.root {
+    height: '100%';
+    width: 'var(--card-width)'
+  }
+.cardContent {
+    paddingBottom: 0
+  }
+.price {
+    marginBottom: '0.5rem'
+  }
+.media {
+    height: 0;
+    paddingTop: '56.25%'
+}
+  

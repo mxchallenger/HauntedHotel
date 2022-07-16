@@ -1,0 +1,27 @@
+.input {
+  margin-top: .5em;
+  width: 100%;
+  padding: .5em;
+  box-sizing: border-box;
+  margin-bottom: 1em;
+}
+
+.label {
+  font-weight: 700;
+  color: #666666;
+  margin-bottom: .5em;
+}
+
+.errors{
+  font-size: 12px;
+  color: red;
+  margin: .05em;
+}
+
+.errorBorder{
+  margin-top: .5em;
+  width: 100%;
+  padding: .5em;
+  box-sizing: border-box;
+  border: red solid 2px
+}

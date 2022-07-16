@@ -1,0 +1,46 @@
+.reservationsTable {
+    width: auto;
+    height: auto;
+    overflow: auto;
+    padding-bottom: 10%;
+}
+
+.reservationsTable table {
+    border-spacing: 0px;
+    color: white;
+    width: 90%;
+    margin-left: 5%;
+    overflow: auto;
+    font-weight: bold;
+}
+
+.reservationsTable tr {
+    background-color: rgb(135, 205, 64);
+    text-align: center;
+    white-space: wrap;
+    margin: auto;
+}
+
+.reservationsTable th {
+    position: sticky;
+    top: 0px;
+    /* Borders on the top because the headers are the top row */
+    border-top: 1px solid black;
+    text-align: center;
+    background: purple;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    padding: 4px 1px 4px 1px;
+    white-space: wrap;
+    z-index: 10;
+    height: 14px;
+}
+.button{
+    background-color: purple;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    margin: 4px 2px;
+    padding: 5px ;
+}

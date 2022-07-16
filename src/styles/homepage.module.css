@@ -1,0 +1,17 @@
+.bg {
+    background-image: url(https://img1.10bestmedia.com/Images/Photos/381016/1886-Crescent-Hotel---Spa_54_990x660.jpg);
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg {
+    background-image: url(https://img1.10bestmedia.com/Images/Photos/381016/1886-Crescent-Hotel---Spa_54_990x660.jpg);
+    background-size: cover;
+    background-position: top;
+    min-height: 100%;
+    height: 100vh;
+    position: relative;
+}
+

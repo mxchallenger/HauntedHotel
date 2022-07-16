@@ -1,0 +1,38 @@
+.app {
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: repeat(4, auto);
+  justify-content: space-evenly;
+  margin: 20px;
+}
+
+.button{
+    background-color: purple;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    margin: 4px 2px;
+    padding: 5px ;
+}
+@media (prefers-reduced-motion:reduce) {
+  .pageLink {
+    transition: none
+  }
+}
+.errMsg {
+  color: red;
+  font-size: 14px;
+  margin: 0px 2px 4px 4px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  border: 1px solid whitesmoke;
+  gap: var(--card-gap);
+  min-width: var(--card-min-width);
+  width: min(var(--container-min-width), var(--container-max-width));
+  margin: var(--grid-margin);
+}

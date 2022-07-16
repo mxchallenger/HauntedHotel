@@ -1,0 +1,35 @@
+.navContainer{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 150px;
+  z-index: 1;
+  background-color: #6b6b6b;
+}
+.left{
+  justify-content: center;
+}
+.right{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo{
+  height: 130px;
+}
+.links .active{
+  text-decoration: underline;
+  color: whitesmoke;
+}
+.links a{
+  margin-left: 30px;
+  text-align:justify;
+  font-size: xx-large;
+  font-weight: bold;
+  text-decoration: none;
+  color: greenyellow;
+}
+.links a:hover {
+  color: purple;
+}
+
