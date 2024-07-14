@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/HauntedHotel/static/css/main.9dbfb31f.css",
+    "main.js": "/HauntedHotel/static/js/main.d1a0ea9a.js",
+    "static/js/289.f57703a3.chunk.js": "/HauntedHotel/static/js/289.f57703a3.chunk.js",
+    "static/media/logo.png": "/HauntedHotel/static/media/logo.6ebe1b0b95071ac413d2.png",
+    "index.html": "/HauntedHotel/index.html",
+    "main.9dbfb31f.css.map": "/HauntedHotel/static/css/main.9dbfb31f.css.map",
+    "main.d1a0ea9a.js.map": "/HauntedHotel/static/js/main.d1a0ea9a.js.map",
+    "289.f57703a3.chunk.js.map": "/HauntedHotel/static/js/289.f57703a3.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9dbfb31f.css",
+    "static/js/main.d1a0ea9a.js"
+  ]
+}
