@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/HauntedHotel/static/css/main.9dbfb31f.css",
-    "main.js": "/HauntedHotel/static/js/main.d1a0ea9a.js",
-    "static/js/289.f57703a3.chunk.js": "/HauntedHotel/static/js/289.f57703a3.chunk.js",
+    "main.css": "/HauntedHotel/static/css/main.044d2df6.css",
+    "main.js": "/HauntedHotel/static/js/main.bf8c0a0c.js",
+    "static/js/289.2a01f409.chunk.js": "/HauntedHotel/static/js/289.2a01f409.chunk.js",
     "static/media/logo.png": "/HauntedHotel/static/media/logo.6ebe1b0b95071ac413d2.png",
     "index.html": "/HauntedHotel/index.html",
-    "main.9dbfb31f.css.map": "/HauntedHotel/static/css/main.9dbfb31f.css.map",
-    "main.d1a0ea9a.js.map": "/HauntedHotel/static/js/main.d1a0ea9a.js.map",
-    "289.f57703a3.chunk.js.map": "/HauntedHotel/static/js/289.f57703a3.chunk.js.map"
+    "main.044d2df6.css.map": "/HauntedHotel/static/css/main.044d2df6.css.map",
+    "main.bf8c0a0c.js.map": "/HauntedHotel/static/js/main.bf8c0a0c.js.map",
+    "289.2a01f409.chunk.js.map": "/HauntedHotel/static/js/289.2a01f409.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9dbfb31f.css",
-    "static/js/main.d1a0ea9a.js"
+    "static/css/main.044d2df6.css",
+    "static/js/main.bf8c0a0c.js"
   ]
 }
