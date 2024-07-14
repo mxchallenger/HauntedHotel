@@ -22,6 +22,16 @@ function HomePage() {
         Key features include form validation, dynamic image display from URLs,
         and reservation cost calculations based on room rates.
       </p>
+      <p className={styles.description}>
+        <a
+          href="https://github.com/mxchallenger/HauntedHotel"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.link}
+        >
+          View HauntedHotel GitHub Repository
+        </a>
+      </p>
     </div>
   );
 }
