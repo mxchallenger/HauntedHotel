@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {
-  BrowserRouter, Route, Routes
+  HashRouter, Route, Routes
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,23 +23,22 @@ import c from '../../utils/constants';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <Navbar />
-        <Routes>
-          <Route path={c.HOME} element={<HomePage />} />
-          <Route path={c.RESERVATION_ENDPOINT} element={<ReservationsPage />} />
-          <Route path={c.CREATE_RES} element={<ReservationCreatePage />} />
-          <Route path={c.EDIT_RES} element={<ReservationEditPage />} />
-          <Route path={c.ROOMTYPE_ENDPOINT} element={<RoomTypesPage />} />
-          <Route path={c.CREATE_ROOM} element={<RoomTypeCreatePage />} />
-          <Route path={c.EDIT_ROOM} element={<RoomTypeEditPage />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-        <ToastContainer
-          position="top-center"
-          autoClose={8000}
-        />
-      </BrowserRouter>
+        <div className="content">
+          <Routes>
+            <Route path={c.HOME} element={<HomePage />} />
+            <Route path={c.RESERVATION_ENDPOINT} element={<ReservationsPage />} />
+            <Route path={c.CREATE_RES} element={<ReservationCreatePage />} />
+            <Route path={c.EDIT_RES} element={<ReservationEditPage />} />
+            <Route path={c.ROOMTYPE_ENDPOINT} element={<RoomTypesPage />} />
+            <Route path={c.CREATE_ROOM} element={<RoomTypeCreatePage />} />
+            <Route path={c.EDIT_ROOM} element={<RoomTypeEditPage />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </div>
+        <ToastContainer position="top-center" autoClose={8000} />
+      </HashRouter>
     </div>
   );
 }
