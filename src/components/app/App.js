@@ -20,26 +20,28 @@ import c from '../../utils/constants';
  * @name App
  * @returns component
  */
-const App = () => (
-  <div className="App">
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path={c.HOME} component={HomePage} />
-        <Route path={c.RESERVATION_ENDPOINT} component={ReservationsPage} />
-        <Route path={c.CREATE_RES} component={ReservationCreatePage} />
-        <Route path={c.EDIT_RES} component={ReservationEditPage} />
-        <Route path={c.ROOMTYPE_ENDPOINT} component={RoomTypesPage} />
-        <Route path={c.CREATE_ROOM} component={RoomTypeCreatePage} />
-        <Route path={c.EDIT_ROOM} component={RoomTypeEditPage} />
-        <Route component={PageNotFound} />
-      </Routes>
-      <ToastContainer
-        position="top-center"
-        autoClose={8000}
-      />
-    </BrowserRouter>
-  </div>
+function App() {
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path={c.HOME} element={<HomePage />} />
+          <Route path={c.RESERVATION_ENDPOINT} element={<ReservationsPage />} />
+          <Route path={c.CREATE_RES} element={<ReservationCreatePage />} />
+          <Route path={c.EDIT_RES} element={<ReservationEditPage />} />
+          <Route path={c.ROOMTYPE_ENDPOINT} element={<RoomTypesPage />} />
+          <Route path={c.CREATE_ROOM} element={<RoomTypeCreatePage />} />
+          <Route path={c.EDIT_ROOM} element={<RoomTypeEditPage />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+        <ToastContainer
+          position="top-center"
+          autoClose={8000}
+        />
+      </BrowserRouter>
+    </div>
+  );
+}
 
-);
 export default App;

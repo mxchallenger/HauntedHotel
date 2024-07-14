@@ -1,102 +1,100 @@
 import { toast } from 'react-toastify';
-import HttpHelper from '../HttpHelper';
-import Constants from '../constants';
+import supabase from '../../supabaseClient';
 
 /**
- *
  * @name fetchRooms
- * @description Utilizes HttpHelper to make a get request to an API
- * @param {*} setReservations sets state for reservations
- * @param {*} setApiError sets error if response other than 200 is returned
- * @returns sets state for reservations if 200 response, else sets state for apiError
+ * @description Fetches rooms from Supabase
+ * @param {function} setRooms sets state for rooms
  */
-async function fetchRooms(setRooms, setApiError) {
-  await HttpHelper(Constants.ROOMTYPE_ENDPOINT, 'GET')
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(Constants.API_ERROR);
-    })
-    .then(setRooms)
-    .catch(() => {
-      setApiError(true);
-    });
+async function fetchRooms() {
+  const { data, error } = await supabase
+    .from('room_types')
+    .select('*');
+
+  if (error) {
+    throw error;
+  }
+  return data;
 }
+
 /**
  * @name fetchRoomById
- * @description Utilizes HttpHelper to make a GET request to an API
+ * @description Fetches a room by ID from Supabase
  * @param {int} id uses room type ID
- * @param {object} rooms
  */
-async function fetchRoomById(id, setRooms) {
-  await HttpHelper(`${Constants.ROOMTYPE_ENDPOINT}/${id}`, 'GET')
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(Constants.API_ERROR);
-    }).then(((info) => setRooms(info)));
+async function fetchRoomById(id) {
+  const { data, error } = await supabase
+    .from('room_types')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+  return data;
 }
 
 /**
  * @name editRoomsById
- * @description Utilizes HttpHelper to make a PUT request to an API
- * @param {int} roomId
- * @param {object} editedRooms object passed from front end form elements.
+ * @description Edits a room by ID in Supabase
+ * @param {object} editedRoom edited room object
+ * @param {int} id room ID
  */
-async function editRoomsById(editedRooms, rooms) {
-  await HttpHelper(`${Constants.ROOMTYPE_ENDPOINT}/${rooms.id}`, 'PUT', editedRooms)
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      if (response.status === 400) {
-        throw new Error('A server error occurred. Your updates have not been saved');
-      }
-      throw new Error(Constants.API_ERROR);
-    });
+async function editRoomsById(editedRoom, { id }) {
+  const { error } = await supabase
+    .from('room_types')
+    .update(editedRoom)
+    .eq('id', id);
+
+  if (error) {
+    throw error;
+  }
 }
+
 /**
- *
  * @name deleteRoomById
- * @description Utilizes HttpHelper to make a DELETE request to an API
- * @param {int} roomId id of reservation to be deleted
- * @returns a deleted reservation or throws an error
+ * @description Deletes a room by ID in Supabase
+ * @param {int} roomId id of room to be deleted
  */
 async function deleteRoomById(roomId) {
-  await HttpHelper(`${Constants.ROOMTYPE_ENDPOINT}/${roomId}`, 'DELETE')
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      if (response.status === 400) {
-        throw new Error('Server error. Try again.');
-      }
-      throw new Error(Constants.API_ERROR);
-    });
+  try {
+    const { error } = await supabase
+      .from('room_types')
+      .delete()
+      .eq('id', roomId);
+
+    if (error) throw error;
+
+    toast.success('Room successfully deleted');
+  } catch (error) {
+    toast.error('Server error. Try again.');
+  }
 }
+
 /**
- *
  * @name createNewRoom
- * @description Utilizes HttpHelper to make a POST request to an API
- * @param newReservationForm
- * @returns
+ * @description Creates a new room in Supabase
+ * @param {object} newRoom new room object
  */
 async function createNewRoom(newRoom) {
-  await HttpHelper(Constants.ROOMTYPE_ENDPOINT, 'POST', newRoom)
-    .then((response) => {
-      if (response.ok) {
-        toast.success('A room was added to the database');
-        response.json();
-      } else {
-        throw new Error(Constants.API_ERROR);
-      }
-    })
-    .then(Object.assign(newRoom))
-    .catch(() => {
-      toast.error('Room unsuccessful');
-    });
+  try {
+    console.log('Attempting to create a new room:', newRoom);
+
+    const { data, error } = await supabase
+      .from('room_types')
+      .insert(newRoom);
+
+    if (error) {
+      console.error('Error inserting new room:', error);
+      throw error;
+    }
+
+    console.log('New room created:', data);
+    toast.success('A room was added to the database');
+  } catch (error) {
+    toast.error('Room creation unsuccessful');
+  }
 }
 
 export {

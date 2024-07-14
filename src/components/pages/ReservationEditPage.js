@@ -1,103 +1,136 @@
+import { toast } from 'react-toastify';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import s from '../../styles/reservations.module.css';
-import FormItem from '../form/FormItem';
-import validateForm from '../../utils/Validation/ValidateForm';
+import styles from '../../styles/createEdit.module.css';
+import ReservationForm from '../reservations/ReservationForm';
+import FormItemDropdown from '../form/FormItemDropdown';
+// import validateForm from '../../utils/Validation/ValidateForm';
 import { editReservationById, getReservationById } from '../../utils/services/ReservationsPageService';
-import RoomTypeDropdown from '../reservations/RoomTypeDropdown';
+import { fetchRooms } from '../../utils/services/RoomPageService';
 
 /**
- * @name UpdateReservationPage
+ * @name EditReservationPage
  * @description Allows entry/validation/PUT of reservation
  * @return component
  */
-const UpdateReservationPage = () => {
+function EditReservationPage() {
   const { id } = useParams();
   const [resData, setResData] = useState({
     user: 'user@catalyte.io',
-    guestEmail: '',
-    roomTypeId: '',
-    checkInDate: '',
-    numberOfNights: ''
+    guest_email: '',
+    room_type_id: '',
+    check_in_date: '',
+    number_of_nights: ''
   });
+  const [errors, setErrors] = useState({});
+  const [roomOptions, setRoomOptions] = useState([]);
+  const [apiError, setApiError] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getReservationById(Number(id), setResData);
+    const fetchData = async () => {
+      try {
+        const rooms = await fetchRooms();
+        // Moved the definition of options inside the then() block after rooms are set
+        const options = rooms.map((room) => ({
+          value: room.id,
+          label: room.name
+        }));
+        console.log(options);
+        setRoomOptions(options);
+        const reservation = await getReservationById(Number(id));
+        setResData((prevData) => ({
+          ...prevData,
+          guest_email: reservation.guest_email || '',
+          room_type_id: reservation.room_type_id || '',
+          check_in_date: reservation.check_in_date || '',
+          number_of_nights: reservation.number_of_nights || ''
+        }));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setApiError(true);
+      }
+    };
+    fetchData();
   }, [id]);
 
-  const [errors, setErrors] = useState({});
   const onChange = (e) => {
     setResData({ ...resData, [e.target.id]: e.target.value });
   };
 
-  const history = useNavigate();
+  const validateFormWithErrors = (data, setErrorsCallback, callback) => {
+    const datePattern = /^(\d{2})([-]{1})(\d{2})([-]{1})(\d{4})$/;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const validationErrors = {};
 
-  const resObj = () => {
-    const newReservation = {
-      id,
-      user: 'user@catalyte.io',
-      guestEmail: resData.guestEmail,
-      roomTypeId: resData.roomTypeId,
-      checkInDate: resData.checkInDate,
-      numberOfNights: resData.numberOfNights
-    };
-    editReservationById(newReservation, { id }).then(() => history.push('/reservations'));
+    // Validate check_in_date
+    if (!datePattern.test(data.check_in_date)) {
+      validationErrors.check_in_date = 'Invalid date format. Use MM-DD-YYYY.';
+    }
+
+    // Validate guest_email
+    if (!emailPattern.test(data.guest_email)) {
+      validationErrors.guest_email = 'Invalid email format.';
+    }
+
+    // Add other validations as needed
+
+    if (Object.keys(validationErrors).length === 0) {
+      callback();
+    } else {
+      setErrorsCallback(validationErrors);
+    }
   };
 
-  const createReservation = (e) => {
+  const resObj = () => {
+    const updatedReservation = {
+      id,
+      // user: 'user@catalyte.io',
+      guest_email: resData.guest_email,
+      room_type_id: resData.room_type_id,
+      check_in_date: resData.check_in_date,
+      number_of_nights: resData.number_of_nights
+    };
+    editReservationById(updatedReservation)
+      .then(() => {
+        toast.success('Reservation updated successfully');
+        navigate('/reservations');
+      })
+      .catch((error) => {
+        toast.error('Server error. Your updates have not been saved.');
+        console.error('Error updating reservation:', error);
+      });
+  };
+
+  const editReservation = (e) => {
     e.preventDefault();
-    validateForm(resData, setErrors, resObj);
+    validateFormWithErrors(resData, setErrors, resObj);
   };
 
   return (
-    <div className={s.productContainer}>
-      <div className={`${s.step} ${s.product}`}>
-        <h3 className={s.title}>Update Reservation</h3>
-        <FormItem
-          value={resData.guestEmail}
-          type="email"
-          id="guestEmail"
-          label="Guest Email"
+    <div className={styles.container}>
+      <div className={styles.formWrapper}>
+        <h3 className={styles.title}>Edit Reservation</h3>
+        {apiError && <p className={styles.error}>Error fetching data.</p>}
+        <ReservationForm
           onChange={onChange}
+          resData={resData}
           errors={errors}
-          className={(errors.guestEmail ? s.errorBorder : s.input)}
+          defaultValue=""
         />
-        {errors && <p className={s.errorMessage}>{errors.guestEmail}</p>}
-
-        <FormItem
-          value={resData.checkInDate}
-          type="text"
-          id="checkInDate"
-          label="Check-in Date"
-          onChange={onChange}
-          errors={errors}
-          className={(errors.checkInDate ? s.errorBorder : s.input)}
-        />
-        {errors && <p className={s.errorMessage}>{errors.checkInDate}</p>}
-
-        <FormItem
-          value={resData.numberOfNights}
-          type="number"
-          id="numberOfNights"
-          label="Number of Nights"
-          onChange={onChange}
-          errors={errors}
-          className={(errors.numberOfNights ? s.errorBorder : s.input)}
-        />
-        {errors && <p className={s.errorMessage}>{errors.numberOfNights}</p>}
-      </div>
-      <div className={s.checkbox}>
-        <RoomTypeDropdown
-          onChange={onChange}
+        <FormItemDropdown
           id="roomTypeId"
-          value={resData.roomTypeId}
+          label="Room Types"
+          onChange={onChange}
+          value={resData.room_type_id}
+          options={roomOptions}
         />
       </div>
-      <div className={s.buttonArea}>
-        <button onClick={createReservation} type="button" className={s.button}>CREATE</button>
+      <div className={styles.buttonArea}>
+        <button onClick={editReservation} type="button" className={styles.button}>UPDATE</button>
       </div>
     </div>
   );
-};
+}
 
-export default UpdateReservationPage;
+export default EditReservationPage;

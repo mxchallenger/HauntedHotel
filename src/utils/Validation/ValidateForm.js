@@ -9,6 +9,8 @@ import validateFields from './ValidateFields';
  * to database.
  */
 function validateForm(item, errorsCallback, pushObj) {
+  console.log('Validating form:', item);
+  console.log(pushObj);
   const fieldErrors = {};
   Object.entries(item).forEach((field) => {
     let errorValue = '';

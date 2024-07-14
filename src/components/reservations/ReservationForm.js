@@ -7,41 +7,46 @@ import s from '../../styles/reservations.module.css';
  * @description Allows entry of Guest Details
  * @return component
  */
-const ReservationForm = ({
-  onChange, errors
-}) => (
-  <div className={s.inputs}>
-    <FormItem
-      placeholder="e.g. example@catalyte.io"
-      type="email"
-      id="guestEmail"
-      label="Guest Email"
-      onChange={onChange}
-      errors={errors}
-      className={(errors.guestEmail ? s.errorBorder : s.input)}
-    />
-    {errors && <p className={s.errorMessage}>{errors.guestEmail}</p>}
+function ReservationForm({
+  onChange, resData, errors
+}) {
+  return (
+    <div className={s.inputs}>
+      <FormItem
+        value={resData.guest_email}
+        placeholder="e.g. example@catalyte.io"
+        type="email"
+        id="guest_email"
+        label="Guest Email"
+        onChange={onChange}
+        errors={errors}
+        // className={(errors.guest_email ? s.errorBorder : s.input)}
+      />
+      {errors && <p className={s.errorMessage}>{errors.guest_email}</p>}
 
-    <FormItem
-      placeholder="e.g. MM-DD-YYYY"
-      type="text"
-      id="checkInDate"
-      label="Check-in Date"
-      onChange={onChange}
-      errors={errors}
-      className={(errors.checkInDate ? s.errorBorder : s.input)}
-    />
-    {errors && <p className={s.errorMessage}>{errors.checkInDate}</p>}
+      <FormItem
+        value={resData.check_in_date}
+        placeholder="e.g. MM-DD-YYYY"
+        type="text"
+        id="check_in_date"
+        label="Check-in Date"
+        onChange={onChange}
+        errors={errors}
+        // className={(errors.check_in_date ? s.errorBorder : s.input)}
+      />
+      {errors && <p className={s.errorMessage}>{errors.check_in_date}</p>}
 
-    <FormItem
-      type="number"
-      id="numberOfNights"
-      label="Number of Nights"
-      onChange={onChange}
-      errors={errors}
-      className={(errors.numberOfNights ? s.errorBorder : s.input)}
-    />
-    {errors && <p className={s.errorMessage}>{errors.numberOfNights}</p>}
-  </div>
-);
+      <FormItem
+        value={resData.number_of_nights}
+        type="number"
+        id="number_of_nights"
+        label="Number of Nights"
+        onChange={onChange}
+        errors={errors}
+        // className={(errors.number_of_nights ? s.errorBorder : s.input)}
+      />
+      {errors && <p className={s.errorMessage}>{errors.number_of_nights}</p>}
+    </div>
+  );
+}
 export default ReservationForm;

@@ -1,0 +1,30 @@
+{
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "deno.enablePaths": [
+    "supabase/functions"
+  ],
+  "deno.lint": true,
+  "deno.unstable": true,
+  "peacock.color": "#ecc8b1",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#f6e5da",
+    "activityBar.background": "#f6e5da",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#2cb361",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#15202b99",
+    "sash.hoverBorder": "#f6e5da",
+    "statusBar.background": "#ecc8b1",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#e2ab88",
+    "statusBarItem.remoteBackground": "#ecc8b1",
+    "statusBarItem.remoteForeground": "#15202b",
+    "titleBar.activeBackground": "#ecc8b1",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#ecc8b199",
+    "titleBar.inactiveForeground": "#15202b99"
+  }
+}

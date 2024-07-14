@@ -1,10 +1,12 @@
 import React from 'react';
 
-const PageNotFound = () => (
-  <div className="bg">
-    <h1>404 Error</h1>
-    <h1>Page Not Found</h1>
-  </div>
-);
+function PageNotFound() {
+  return (
+    <div className="bg">
+      <h1>404 Error</h1>
+      <h1>Page Not Found</h1>
+    </div>
+  );
+}
 
 export default PageNotFound;

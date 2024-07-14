@@ -4,39 +4,47 @@ import { NavLink } from 'react-router-dom';
 import s from '../../styles/roomtypes.module.css';
 import c from '../../utils/constants';
 import { fetchRooms } from '../../utils/services/RoomPageService';
-import RoomCard from '../roomttypes/RoomCard';
-// import { fetchRooms } from '../../utils/services/RoomPageService';
+import RoomCard from '../roomtypes/RoomCard';
+
 /**
  * @name RoomTypesPage
  * @description fetches products from API and displays rooms as cards with edit buttons
  * @return component
  */
-const RoomTypesPage = () => {
+function RoomTypesPage() {
   const [roomTypes, setRoomTypes] = useState([]);
-  const [apiError, setApiError] = useState(false);
 
   useEffect(() => {
-    fetchRooms(setRoomTypes, setApiError);
+    const fetchData = async () => {
+      const rooms = await fetchRooms();
+      setRoomTypes(rooms);
+    };
+
+    fetchData();
   }, []);
-  // if you don't add a key to the div  in the map, you'll get a react child key error
+
   return (
     <div className={s.oContainer}>
       <NavLink to={`${c.CREATE_ROOM}`}>
-        <button className={s.button} type="button">CREATE</button>
+        <button className={s.createButton} type="button">CREATE NEW ROOM</button>
       </NavLink>
-      <div className={c.iContainer}>
+      <div className={s.iContainer}>
         <Box>
-          {apiError && <p className={s.errMsg} data-testid="errMsg">{c.API_ERROR}</p>}
           <div className={s.app}>
-            {roomTypes.map((roomType) => (
-              <div key={roomType.id}>
-                <RoomCard roomType={roomType} />
-              </div>
-            ))}
+            {roomTypes.length > 0 ? (
+              roomTypes.map((roomType) => (
+                <div key={roomType.id}>
+                  <RoomCard roomType={roomType} />
+                </div>
+              ))
+            ) : (
+              <p>No room types available</p>
+            )}
           </div>
         </Box>
       </div>
     </div>
   );
-};
+}
+
 export default RoomTypesPage;

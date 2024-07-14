@@ -1,43 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../../styles/reservations.module.css';
+import styles from '../../styles/createEdit.module.css';
 import ReservationForm from '../reservations/ReservationForm';
 import FormItemDropdown from '../form/FormItemDropdown';
 import validateForm from '../../utils/Validation/ValidateForm';
 import { addReservation } from '../../utils/services/ReservationsPageService';
+import { fetchRooms } from '../../utils/services/RoomPageService';
 
 /**
  * @name CreateReservationPage
  * @description Allows entry/validation/post of reservation
  * @return component
  */
-const CreateReservationPage = () => {
-  // roomNames[reservations.roomtypeId]
+function CreateReservationPage() {
   const [resData, setResData] = useState({
     user: 'user@catalyte.io',
-    guestEmail: '',
+    guest_email: '',
     roomTypeId: '',
-    checkInDate: '',
-    numberOfNights: ''
+    check_in_date: '',
+    number_of_nights: ''
   });
   const [errors, setErrors] = useState({});
+  const [roomOptions, setRoomOptions] = useState([]);
+  const [apiError, setApiError] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchAndSetRooms = async () => {
+      try {
+        const rooms = await fetchRooms();
+        console.log('Fetched rooms:', rooms); // Debug: Log fetched rooms
+        const options = rooms.map((room) => ({ value: room.id, label: room.name }));
+        console.log('Dropdown options:', options); // Debug: Log dropdown options
+        setRoomOptions(options);
+      } catch (error) {
+        console.error('Error fetching rooms:', error); // Debug: Log any errors
+        setApiError(true);
+      }
+    };
+    fetchAndSetRooms();
+  }, []);
+
   const onChange = (e) => {
     setResData({ ...resData, [e.target.id]: e.target.value });
   };
 
-  const history = useNavigate();
-
-  const dropOptions = [1, 2, 3, 4, 5, 6, 7];
-
   const resObj = () => {
     const newReservation = {
       user: 'user@catalyte.io',
-      guestEmail: resData.guestEmail,
+      guest_email: resData.guest_email,
       roomTypeId: resData.roomTypeId,
-      checkInDate: resData.checkInDate,
-      numberOfNights: resData.numberOfNights
+      check_in_date: resData.check_in_date,
+      number_of_nights: resData.number_of_nights
     };
-    addReservation(newReservation).then(() => history.push('/reservations'));
+    addReservation(newReservation).then(() => navigate('/reservations'));
   };
 
   const createReservation = (e) => {
@@ -46,9 +62,10 @@ const CreateReservationPage = () => {
   };
 
   return (
-    <div className={styles.productContainer}>
-      <div className={`${styles.step} ${styles.product}`}>
+    <div className={styles.container}>
+      <div className={styles.formWrapper}>
         <h3 className={styles.title}>Create New Reservation</h3>
+        {apiError && <p className={styles.errorMessage}>Error fetching room types.</p>}
         <ReservationForm
           onChange={onChange}
           resData={resData}
@@ -59,8 +76,8 @@ const CreateReservationPage = () => {
           id="roomTypeId"
           label="Room Types"
           onChange={onChange}
-          defaultValue="Select Room Type"
-          options={dropOptions}
+          value={resData.roomTypeId}
+          options={roomOptions}
         />
       </div>
       <div className={styles.buttonArea}>
@@ -68,6 +85,6 @@ const CreateReservationPage = () => {
       </div>
     </div>
   );
-};
+}
 
 export default CreateReservationPage;

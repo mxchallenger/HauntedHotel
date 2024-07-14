@@ -18,10 +18,10 @@ const TableData = () => {
       {reservations.map((res) => (
         <tr>
           <td key={res.id}>{res.id}</td>
-          <td>{res.guestEmail}</td>
+          <td>{res.guest_email}</td>
           <td>{res.roomTypeId}</td>
-          <td>{res.checkInDate}</td>
-          <td>{res.numberOfNights}</td>
+          <td>{res.check_in_date}</td>
+          <td>{res.number_of_nights}</td>
         </tr>
       ))}
     </tbody>

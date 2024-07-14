@@ -6,24 +6,22 @@
   margin: 20px;
 }
 
-.button{
-    background-color: purple;
-    border: 1px solid black;
-    border-radius: 10px;
-    color: white;
-    font-weight: bold;
-    margin: 4px 2px;
-    padding: 5px ;
+.createButton {
+  background-color: purple;
+  border: 1px solid black;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  margin: 10px 2px;
+  padding: 15px 30px; 
+  font-size: 18px; 
+  cursor: pointer; 
 }
+
 @media (prefers-reduced-motion:reduce) {
   .pageLink {
     transition: none
   }
-}
-.errMsg {
-  color: red;
-  font-size: 14px;
-  margin: 0px 2px 4px 4px;
 }
 
 .container {
@@ -35,4 +33,14 @@
   min-width: var(--card-min-width);
   width: min(var(--container-min-width), var(--container-max-width));
   margin: var(--grid-margin);
+}
+
+.errorMessage {
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.errorBorder {
+  border-color: red;
 }

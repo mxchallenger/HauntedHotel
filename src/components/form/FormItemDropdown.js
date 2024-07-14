@@ -3,36 +3,43 @@ import styles from './FormItem.module.css';
 
 /**
  * @name FormItemDropdown
- * @description Input field
+ * @description Dropdown component for form items
  * @return component
  */
-const FormItemDropdown = ({
-  onChange, value, id, label, options, className
-}) => (
-
-  <div>
-    <label className={styles.label} htmlFor={id}>
-      {label}
+function FormItemDropdown({
+  onChange, value, defaultValue, id, label, options, className
+}) {
+  return (
+    <div className={styles.formItem}>
+      <label className={styles.label} htmlFor={id}>
+        {label}
+      </label>
       <div>
         <select
-          className={className}
+          className={`${className} ${styles.select}`}
           id={id}
           onBlur={onChange}
           onChange={onChange}
           value={value}
+          defaultValue={defaultValue}
         >
-          {options.map((optionText) => (
+          <option value="">
+            Select
+            {' '}
+            {label}
+          </option>
+          {options.map((option) => (
             <option
-              value={optionText}
-              key={optionText}
+              value={option.value}
+              key={option.value}
             >
-              {optionText}
+              {option.label}
             </option>
           ))}
         </select>
       </div>
-    </label>
-  </div>
-);
+    </div>
+  );
+}
 
 export default FormItemDropdown;

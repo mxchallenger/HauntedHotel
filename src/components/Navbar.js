@@ -9,20 +9,32 @@ import c from '../utils/constants';
  * @description Displays navbar header
  * @returns component
  */
-const Navbar = () => (
-  <div className={s.navContainer}>
-    <div className={s.left}>
-      <NavLink to="/">
-        <img src={logo} alt="Logo" height="150px" />
-      </NavLink>
+function Navbar() {
+  return (
+    <div className={s.navContainer}>
+      <div className={s.left}>
+        <NavLink to="/">
+          <img src={logo} alt="Logo" height="150px" />
+        </NavLink>
+      </div>
+      <div className={s.right}>
+        <nav className={s.links}>
+          <NavLink
+            to={c.RESERVATION_ENDPOINT}
+            className={({ isActive }) => (isActive ? s.active : undefined)}
+          >
+            Reservations
+          </NavLink>
+          <NavLink
+            to={c.ROOMTYPE_ENDPOINT}
+            className={({ isActive }) => (isActive ? s.active : undefined)}
+          >
+            Room Types
+          </NavLink>
+        </nav>
+      </div>
     </div>
-    <div className={s.right}>
-      <nav className={s.links}>
-        <NavLink activeClassName={s.active} to={c.RESERVATION_ENDPOINT}>Reservations</NavLink>
-        <NavLink activeClassName={s.active} to={c.ROOMTYPE_ENDPOINT}>Room Types</NavLink>
-      </nav>
-    </div>
-  </div>
-);
+  );
+}
 
 export default Navbar;

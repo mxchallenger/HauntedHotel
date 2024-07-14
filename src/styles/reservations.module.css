@@ -1,3 +1,43 @@
+.createButton {
+    background-color: purple;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    margin: 10px 2px;
+    padding: 15px 30px; /* Increased padding for larger button */
+    font-size: 18px; /* Increased font size */
+    cursor: pointer; /* Ensures the cursor changes to a pointer */
+}
+
+.button {
+    background-color: purple;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    margin: 10px 2px;
+    padding: 10px 20px;
+    cursor: pointer; 
+    width: 100px; 
+    text-align: center;
+    display: inline-block; 
+    box-sizing: border-box;
+}
+
+.titleText{
+    background-color: #333;
+    color: white;
+    font-size: 18px;
+    padding: 20px;
+    width: 100vw;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10;
+    box-sizing: border-box;
+}
 .reservationsTable {
     width: auto;
     height: auto;
@@ -35,12 +75,13 @@
     z-index: 10;
     height: 14px;
 }
-.button{
-    background-color: purple;
-    border: 1px solid black;
-    border-radius: 10px;
-    color: white;
+
+.errorMessage {
+    color: red;
+    font-size: 12px;
     font-weight: bold;
-    margin: 4px 2px;
-    padding: 5px ;
+  }
+  
+.errorBorder {
+    border-color: red;
 }

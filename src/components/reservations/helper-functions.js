@@ -22,7 +22,7 @@ const getRoomRate = (reservation, roomType) => {
   if (roomRate === undefined) {
     return undefined;
   }
-  const totalRate = ((roomRate.rate) * (reservation.numberOfNights).toFixed(2));
+  const totalRate = ((roomRate.rate) * (reservation.number_of_nights).toFixed(2));
   return totalRate;
 };
 

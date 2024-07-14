@@ -1,130 +1,132 @@
 import { toast } from 'react-toastify';
-import HttpHelper from '../HttpHelper';
-import Constants from '../constants';
+import supabase from '../../supabaseClient';
 
 /**
- *
  * @name fetchReservations
- * @description Utilizes HttpHelper to make a get request to an API
- * @param {*} setReservations sets state for reservations
- * @param {*} setApiError sets error if response other than 200 is returned
- * @returns sets state for reservations if 200 response, else sets state for apiError
+ * @description Fetch reservations from Supabase
+ * @param {function} setReservations sets state for reservations
+ * @param {function} setApiError sets error if response other than 200 is returned
+ * @returns sets state for reservations if successful, else sets state for apiError
  */
 async function fetchReservations(setReservations, setApiError) {
-  await HttpHelper(Constants.RESERVATION_ENDPOINT, 'GET')
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(Constants.API_ERROR);
-    })
-    .then(setReservations)
-    .catch(() => {
-      setApiError(true);
-    });
+  try {
+    const { data, error } = await supabase
+      .from('reservations')
+      .select('*');
+
+    if (error) throw error;
+    console.log(data);
+    setReservations(data);
+  } catch (error) {
+    setApiError(true);
+  }
 }
 
 /**
  * @name getReservationById
- * @description Utilizes HttpHelper to make a PUT request to an API
- * @param {int} reservationId
- * @param {object} reservation object passed from front end form elements.
+ * @description Fetches a reservation by ID from Supabase
+ * @param {int} id Reservation ID
+ * @returns {object} Reservation data
  */
-async function getReservationById(reservationId, setReservations) {
-  await HttpHelper(`${Constants.RESERVATION_ENDPOINT}/${reservationId}`, 'GET')
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(Constants.API_ERROR);
-    })
-    .then(((info) => setReservations(info)));
+async function getReservationById(id) {
+  const { data, error } = await supabase
+    .from('reservations')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+  return data;
 }
 
 /**
- *
  * @name deleteReservationById
- * @description Utilizes HttpHelper to make a DELETE request to an API
+ * @description Delete a reservation by ID from Supabase
  * @param {int} reservationId id of reservation to be deleted
- * @returns a deleted reservation or throws an error
+ * @param {function} updateRes function to update reservations after deletion
  */
 async function deleteReservationById(reservationId, updateRes) {
-  await HttpHelper(`${Constants.RESERVATION_ENDPOINT}/${reservationId}`, 'DELETE')
-    .then((response) => {
-      if (response.ok) {
-        response.json();
-        updateRes();
-        toast.success('Reservation successfully deleted');
-      }
-      if (response.status === 400) {
-        throw new Error('Server error. Try again.');
-      }
-      throw new Error(Constants.API_ERROR);
-    });
+  try {
+    const { error } = await supabase
+      .from('reservations')
+      .delete()
+      .eq('id', reservationId);
+
+    if (error) throw error;
+
+    updateRes();
+    toast.success('Reservation successfully deleted');
+  } catch (error) {
+    toast.error('Server error. Try again.');
+  }
 }
+
 /**
- *
  * @name addReservation
- * @description Utilizes HttpHelper to make a PUT request to an API
- * @param reservation to add to repo
- * @returns a deleted reservation or throws an error
+ * @description Add a reservation to Supabase
+ * @param {object} newReservation reservation object to add
  */
 async function addReservation(newReservation) {
-  await HttpHelper(Constants.RESERVATION_ENDPOINT, 'POST', newReservation)
-    .then((response) => {
-      if (response.ok) {
-        toast.success('A reservation was added to the database');
-        response.json();
-      } else {
-        throw new Error(Constants.API_ERROR);
-      }
-    })
-    .then(Object.assign(newReservation))
-    .catch(() => {
-      toast.error('Reservation unsuccessful');
-    });
+  try {
+    const { error } = await supabase
+      .from('reservations')
+      .insert(newReservation);
+
+    if (error) throw error;
+
+    toast.success('A reservation was added to the database');
+  } catch (error) {
+    toast.error('Reservation unsuccessful');
+  }
 }
 
 /**
  * @name editReservationById
- * @description Utilizes HttpHelper to make a PUT request to an API
- * @param {int} roomId
- * @param {object} editedRooms object passed from front end form elements.
+ * @description Edits a reservation by ID in Supabase
+ * @param {object} updatedReservation updated reservation object
  */
-async function editReservationById(editedRes, res) {
-  await HttpHelper(`${Constants.RESERVATION_ENDPOINT}/${res.id}`, 'PUT', editedRes)
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      if (response.status === 400) {
-        throw new Error('A server error occurred. Your updates have not been saved');
-      }
-      throw new Error(Constants.API_ERROR);
-    });
+async function editReservationById(updatedReservation) {
+  const { id, ...updateData } = updatedReservation;
+  console.log('Updating reservation with data:', updateData); // Log the data being sent to Supabase
+
+  const { error } = await supabase
+    .from('reservations')
+    .update(updateData)
+    .eq('id', id);
+
+  if (error) {
+    console.error('Error from Supabase:', error); // Log the error returned from Supabase
+    throw error;
+  }
 }
+
 /**
- *
  * @name fetchRate
- * @description Utilizes HttpHelper to make a get request to an API
- * @param {*} setRate sets state for rate
- * @param {*} ShippingState state for which shipping rate is being requested
- * @param {*} setApiError sets error if response other than 200 is returned
- * @returns sets state for products if 200 response, else sets state for apiError
+ * @description Fetch rate from Supabase
+ * @param {function} setRate sets state for rate
+ * @param {int} roomTypeId room type ID to fetch rate for
+ * @param {function} setApiError sets error if response other than 200 is returned
+ * @returns sets state for rate if successful, else sets state for apiError
  */
 async function fetchRate(setRate, roomTypeId, setApiError) {
-  await HttpHelper(`${Constants.ROOMTYPE_ENDPOINT}/?rate=${roomTypeId}`, 'GET')
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(Constants.API_ERROR);
-    })
-    .then(setRate)
-    .catch(() => {
-      setApiError(false);
-    });
+  try {
+    const { data, error } = await supabase
+      .from('room_types')
+      .select('rate')
+      .eq('id', roomTypeId)
+      .single();
+
+    if (error) throw error;
+
+    setRate(data);
+  } catch (error) {
+    setApiError(true);
+  }
 }
+
+// Export all functions at the bottom
 export {
   deleteReservationById,
   getReservationById,

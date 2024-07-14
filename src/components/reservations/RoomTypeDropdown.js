@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchRooms } from '../../utils/services/RoomPageService';
 
-const RoomTypeDropdown = ({ onChange, id, value }) => {
+function RoomTypeDropdown({ onChange, id, value }) {
   const [roomTypes, setRoomTypes] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [apiError, setApiError] = useState(false);
@@ -33,8 +33,7 @@ const RoomTypeDropdown = ({ onChange, id, value }) => {
         </div>
       </label>
     </div>
-
   );
-};
+}
 
 export default RoomTypeDropdown;

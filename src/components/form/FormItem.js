@@ -3,26 +3,39 @@ import styles from './FormItem.module.css';
 
 /**
  * @name FormItem
- * @description Input field
+ * @description Input field component
  * @return component
  */
-const FormItem = ({
-  onChange, value, id, label, placeholder, type, className, defaultValue
-}) => (
-  <div key={id}>
-    <label className={styles.label} htmlFor={id}>
-      {label}
-    </label>
-    <input
-      className={className}
-      id={id}
-      onChange={onChange}
-      placeholder={placeholder}
-      type={type}
-      value={value}
-      defaultValue={defaultValue}
-    />
-  </div>
-);
+function FormItem({
+  onChange, value, id, label, placeholder, type, className
+}) {
+  return (
+    <div className={styles.formItem}>
+      <label className={styles.label} htmlFor={id}>
+        {label}
+      </label>
+      {type === 'textarea' ? (
+        <textarea
+          className={`${className} ${styles.textarea}`}
+          id={id}
+          onChange={onChange}
+          placeholder={placeholder}
+          value={value}
+          rows="4"
+          cols="50"
+        />
+      ) : (
+        <input
+          className={`${className} ${styles.input}`}
+          id={id}
+          onChange={onChange}
+          placeholder={placeholder}
+          type={type}
+          value={value}
+        />
+      )}
+    </div>
+  );
+}
 
 export default FormItem;
