@@ -11,9 +11,7 @@ async function fetchRooms() {
     .from('room_types')
     .select('*');
 
-  if (error) {
-    throw error;
-  }
+  if (error) { throw error; }
   return data;
 }
 

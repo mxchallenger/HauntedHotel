@@ -14,7 +14,7 @@ import { fetchRooms } from '../../utils/services/RoomPageService';
  */
 function CreateReservationPage() {
   const [resData, setResData] = useState({
-    user: 'user@catalyte.io',
+    // user: 'user@catalyte.io',
     guest_email: '',
     roomTypeId: '',
     check_in_date: '',
@@ -47,9 +47,9 @@ function CreateReservationPage() {
 
   const resObj = () => {
     const newReservation = {
-      user: 'user@catalyte.io',
+      // user: 'user@catalyte.io',
       guest_email: resData.guest_email,
-      roomTypeId: resData.roomTypeId,
+      room_type_id: resData.roomTypeId,
       check_in_date: resData.check_in_date,
       number_of_nights: resData.number_of_nights
     };

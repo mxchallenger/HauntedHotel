@@ -1,5 +1,6 @@
-const https = require('https');
+const { get } = require('https');
+require('dotenv').config();
 
 setInterval(() => {
-  https.get('https://your-supabase-url.supabase.co');
-}, 21600000); // every 6 hours (21600000 ms)
+  get(process.env.SUPABASE_URL);
+}, 21600000); // every 6 hours

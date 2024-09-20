@@ -5,7 +5,7 @@ import ResTableHeadings from '../../utils/helpers/ResTableHeadings';
 /**
  * @returns creates the table with the data
  */
-const TableData = () => {
+function TableData() {
   const [reservations, getReservations] = useState([]);
 
   useEffect(() => {
@@ -26,6 +26,6 @@ const TableData = () => {
       ))}
     </tbody>
   );
-};
+}
 
 export default TableData;

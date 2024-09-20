@@ -22,19 +22,30 @@ function ReservationsPage() {
     const fetchAndSetRooms = async () => {
       try {
         const rooms = await fetchRooms();
-        console.log('Fetched rooms:', rooms); // Debug: Log fetched rooms
+        console.log('Fetched rooms:', rooms);
         setRoomTypes(rooms);
       } catch (error) {
-        console.error('Error fetching rooms:', error); // Debug: Log any errors
+        console.error('Error fetching rooms:', error);
         setApiError(true);
       }
     };
 
-    fetchReservations(setReservations, setApiError);
+    const fetchAndSetReservations = async () => {
+      try {
+        const res = await fetchReservations();
+        console.log('Fetched reservations:', res);
+        setReservations(res);
+      } catch (error) {
+        console.error('Error fetching reservations:', error);
+        setApiError(true);
+      }
+    };
+
     fetchAndSetRooms();
+    fetchAndSetReservations();
   }, []);
 
-  console.log('Room types in res page:', roomTypes); // Debug: Log roomTypes state
+  // console.log('Reservations:', reservations); // Debug: Log reservations
 
   /**
    * @function getRoomInfo

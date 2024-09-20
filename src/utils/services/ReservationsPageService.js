@@ -8,18 +8,13 @@ import supabase from '../../supabaseClient';
  * @param {function} setApiError sets error if response other than 200 is returned
  * @returns sets state for reservations if successful, else sets state for apiError
  */
-async function fetchReservations(setReservations, setApiError) {
-  try {
-    const { data, error } = await supabase
-      .from('reservations')
-      .select('*');
+async function fetchReservations() {
+  const { data, error } = await supabase
+    .from('reservations')
+    .select('*');
 
-    if (error) throw error;
-    console.log(data);
-    setReservations(data);
-  } catch (error) {
-    setApiError(true);
-  }
+  if (error) { throw error; }
+  return data;
 }
 
 /**
@@ -70,12 +65,16 @@ async function deleteReservationById(reservationId, updateRes) {
  */
 async function addReservation(newReservation) {
   try {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('reservations')
       .insert(newReservation);
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error inserting new reservation:', error);
+      throw error;
+    }
 
+    console.log('New res created:', data);
     toast.success('A reservation was added to the database');
   } catch (error) {
     toast.error('Reservation unsuccessful');
