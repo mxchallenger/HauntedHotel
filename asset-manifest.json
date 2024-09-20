@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/HauntedHotel/static/css/main.7f0cf3c2.css",
-    "main.js": "/HauntedHotel/static/js/main.95ae5eef.js",
-    "static/js/952.d68ca7fd.chunk.js": "/HauntedHotel/static/js/952.d68ca7fd.chunk.js",
+    "main.js": "/HauntedHotel/static/js/main.636b0366.js",
+    "static/js/198.72cf92a1.chunk.js": "/HauntedHotel/static/js/198.72cf92a1.chunk.js",
     "static/media/logo.png": "/HauntedHotel/static/media/logo.6ebe1b0b95071ac413d2.png",
     "index.html": "/HauntedHotel/index.html",
     "main.7f0cf3c2.css.map": "/HauntedHotel/static/css/main.7f0cf3c2.css.map",
-    "main.95ae5eef.js.map": "/HauntedHotel/static/js/main.95ae5eef.js.map",
-    "952.d68ca7fd.chunk.js.map": "/HauntedHotel/static/js/952.d68ca7fd.chunk.js.map"
+    "main.636b0366.js.map": "/HauntedHotel/static/js/main.636b0366.js.map",
+    "198.72cf92a1.chunk.js.map": "/HauntedHotel/static/js/198.72cf92a1.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7f0cf3c2.css",
-    "static/js/main.95ae5eef.js"
+    "static/js/main.636b0366.js"
   ]
 }
